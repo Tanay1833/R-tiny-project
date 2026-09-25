@@ -1,0 +1,13 @@
+Student_ID,Name,Gender,Age,Marks,Attendance,Result
+101,Amit,Male,20,78,85,Pass
+102,Priya,Female,21,88,92,Pass
+103,Rahul,Male,20,65,78,Pass
+104,Neha,Female,22,91,95,Pass
+105,Raj,Male,21,45,65,Fail
+106,Pooja,Female,20,72,82,Pass
+107,Karan,Male,22,55,70,Pass
+108,Riya,Female,21,95,96,Pass
+109,Jay,Male,20,38,60,Fail
+110,Anjali,Female,22,81,89,Pass
+111,Dev,Male,21,68,75,Pass
+112,Meena,Female,20,58,72,Pass

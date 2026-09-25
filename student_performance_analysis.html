@@ -1,0 +1,167 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Student Academic Performance Analysis</title>
+<style>
+body{font-family:Arial,sans-serif;line-height:1.55;max-width:1000px;margin:40px auto;padding:0 25px;color:#222}
+h1{color:#17365d} h2{color:#2f5597;border-bottom:1px solid #ddd;padding-bottom:5px}
+code,pre{background:#f4f4f4;padding:3px 6px;border-radius:4px} pre{padding:12px;overflow:auto}
+.data-table{border-collapse:collapse;width:100%} .data-table th,.data-table td{border:1px solid #ccc;padding:7px;text-align:left}
+.data-table th{background:#eaf0f8} img{max-width:760px;width:100%;display:block;margin:15px auto}
+.note{background:#f7f7f7;border-left:4px solid #2f5597;padding:12px}
+</style></head><body>
+<h1>Tiny Project: Student Academic Performance Analysis</h1>
+<p><b>Name:</b>Tanay Mhatre<br>
+ <b> Div:</b>C<br>
+  <b>enrollment no.:</b>2505101270083<br>
+</p>
+<p><b>R Markdown Data Analysis Project</b></p>
+<h2>1. Project Overview</h2>
+<p>This project analyses student academic data containing student ID, name, gender, age, marks, attendance and result. It covers importing, preprocessing, statistical exploration, visualisation, interpretation and conclusion.</p>
+<div class="note">The project source is an R Markdown file. This HTML is the prepared report output included with the project package.</div>
+<h2>2. Dataset</h2>
+<p>The dataset contains 12 records and 7 variables.</p>
+<table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Student_ID</th>
+      <th>Name</th>
+      <th>Gender</th>
+      <th>Age</th>
+      <th>Marks</th>
+      <th>Attendance</th>
+      <th>Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>101</td>
+      <td>Amit</td>
+      <td>Male</td>
+      <td>20</td>
+      <td>78</td>
+      <td>85</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>102</td>
+      <td>Priya</td>
+      <td>Female</td>
+      <td>21</td>
+      <td>88</td>
+      <td>92</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>103</td>
+      <td>Rahul</td>
+      <td>Male</td>
+      <td>20</td>
+      <td>65</td>
+      <td>78</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>104</td>
+      <td>Neha</td>
+      <td>Female</td>
+      <td>22</td>
+      <td>91</td>
+      <td>95</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>105</td>
+      <td>Raj</td>
+      <td>Male</td>
+      <td>21</td>
+      <td>45</td>
+      <td>65</td>
+      <td>Fail</td>
+    </tr>
+    <tr>
+      <td>106</td>
+      <td>Pooja</td>
+      <td>Female</td>
+      <td>20</td>
+      <td>72</td>
+      <td>82</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>107</td>
+      <td>Karan</td>
+      <td>Male</td>
+      <td>22</td>
+      <td>55</td>
+      <td>70</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>108</td>
+      <td>Riya</td>
+      <td>Female</td>
+      <td>21</td>
+      <td>95</td>
+      <td>96</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>109</td>
+      <td>Jay</td>
+      <td>Male</td>
+      <td>20</td>
+      <td>38</td>
+      <td>60</td>
+      <td>Fail</td>
+    </tr>
+    <tr>
+      <td>110</td>
+      <td>Anjali</td>
+      <td>Female</td>
+      <td>22</td>
+      <td>81</td>
+      <td>89</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>111</td>
+      <td>Dev</td>
+      <td>Male</td>
+      <td>21</td>
+      <td>68</td>
+      <td>75</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>112</td>
+      <td>Meena</td>
+      <td>Female</td>
+      <td>20</td>
+      <td>58</td>
+      <td>72</td>
+      <td>Pass</td>
+    </tr>
+  </tbody>
+</table>
+<h2>3. Data Quality</h2>
+<p>Missing values checked: <b>0</b>.</p>
+<p>Duplicate rows checked: <b>0</b>.</p>
+<h2>4. Descriptive Statistics</h2>
+<ul><li>Mean marks: <b>69.50</b></li><li>Median marks: <b>70</b></li>
+<li>Marks variance: <b>329.3636</b></li><li>Marks standard deviation: <b>18.14838</b></li>
+<li>Mean attendance: <b>79.92%</b></li><li>Pass rate: <b>83.3%</b></li></ul>
+<h2>5. Gender Distribution</h2><img src="gender_distribution.png"><p>There are 6 male and 6 female students, giving an equal gender split in this sample.</p>
+<h2>6. Result Distribution</h2><img src="result_distribution.png"><p>Ten students passed and two failed, giving a sample pass rate of 83.3%.</p>
+<h2>7. Marks</h2><img src="student_marks.png"><p>Marks range from 38 to 95, showing substantial variation between students.</p>
+<h2>8. Attendance</h2><img src="student_attendance.png"><p>Attendance ranges from 60% to 96%.</p>
+<h2>9. Attendance vs Marks</h2><img src="attendance_vs_marks.png"><p>The Pearson correlation is <b>0.992637</b>. This is a very strong positive association in this small sample.</p>
+<div class="note"><b>Important:</b> correlation does not establish causation. The sample is small and observational.</div>
+<h2>10. Findings</h2><ul>
+<li>The dataset has 12 students and 7 variables.</li><li>No missing values were detected.</li>
+<li>No duplicate rows were detected.</li><li>Mean marks are 69.50 and median marks are 70.</li>
+<li>There are 6 male and 6 female students.</li><li>10 students passed and 2 failed.</li>
+<li>Attendance and marks have a correlation of approximately 0.993.</li></ul>
+<h2>11. Conclusion</h2>
+<p>The project demonstrates a complete beginner-level data-analysis workflow in R Markdown. The sample suggests that higher attendance is strongly associated with higher marks. However, the dataset is too small to support broad or causal conclusions.</p>
+<h2>12. Reproducibility</h2>
+<p>Open <code>student_performance_analysis.Rmd</code> in RStudio with <code>student_data.csv</code> in the same folder and click Knit.</p>
+</body></html>

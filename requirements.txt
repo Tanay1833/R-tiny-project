@@ -1,0 +1,9 @@
+# R package requirements
+rmarkdown
+knitr
+
+# R version
+R >= 4.0 recommended
+
+# Software
+RStudio recommended for opening and knitting the .Rmd file

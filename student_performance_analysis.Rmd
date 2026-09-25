@@ -1,0 +1,291 @@
+---
+title: "Tiny Project: Student Academic Performance Analysis"
+author: "Student"
+date: "`r format(Sys.Date(), '%d %B %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.width = 7,
+  fig.height = 5
+)
+```
+
+# 1. Project Overview
+
+## Topic selected
+
+**Student Academic Performance Analysis using R**
+
+This tiny project analyses a small student dataset containing student ID, name, gender, age, marks, attendance and result. The objective is to demonstrate the complete R Markdown workflow: importing data, checking and cleaning it, performing descriptive/statistical analysis, creating plots, interpreting the results, and presenting findings.
+
+The uploaded practical material already uses this student-performance dataset and demonstrates importing it with `read.csv()`, checking structure and missing values, calculating median/variance/standard deviation, analysing gender and result counts, creating plots, and calculating the attendance–marks correlation. The original output reports a correlation of approximately 0.993. 
+
+# 2. Objectives
+
+1. Import a CSV dataset into R.
+2. Inspect the structure and quality of the data.
+3. Perform basic preprocessing and cleaning.
+4. Calculate descriptive statistics.
+5. Explore gender and result distributions.
+6. Visualise marks and attendance.
+7. Examine the relationship between attendance and marks.
+8. Interpret the results and identify useful findings.
+
+# 3. Data Description
+
+The dataset contains **12 student records** and **7 variables**.
+
+| Variable | Description | Type |
+|---|---|---|
+| Student_ID | Unique student identifier | Integer |
+| Name | Student name | Character |
+| Gender | Male/Female | Character |
+| Age | Student age | Integer |
+| Marks | Academic marks | Numeric |
+| Attendance | Attendance percentage | Numeric |
+| Result | Pass/Fail | Character |
+
+## 3.1 Importing the dataset
+
+```{r import-data}
+student_data <- read.csv("student_data.csv", stringsAsFactors = FALSE)
+student_data
+```
+
+**Explanation:** `read.csv()` imports the CSV file into an R data frame. `stringsAsFactors = FALSE` keeps text columns as character values.
+
+# 4. Data Preprocessing and Cleaning
+
+## 4.1 Inspect the structure
+
+```{r structure}
+str(student_data)
+```
+
+**Explanation:** `str()` shows the number of observations, variables and their data types. This helps confirm that numeric variables have been imported as numeric/integer and categorical variables as text.
+
+## 4.2 Check for missing values
+
+```{r missing-values}
+colSums(is.na(student_data))
+```
+
+**Explanation:** `is.na()` identifies missing values and `colSums()` counts them in each column.
+
+## 4.3 Check duplicate rows
+
+```{r duplicates}
+sum(duplicated(student_data))
+```
+
+**Explanation:** `duplicated()` detects repeated rows. A value of zero means that no duplicate records were found.
+
+## 4.4 Validate ranges and categories
+
+```{r validation}
+range(student_data$Age)
+range(student_data$Marks)
+range(student_data$Attendance)
+unique(student_data$Gender)
+unique(student_data$Result)
+```
+
+**Explanation:** `range()` checks numerical limits while `unique()` checks the categories present in categorical variables.
+
+## 4.5 Cleaning decision
+
+```{r cleaning}
+student_data <- student_data[
+  !is.na(student_data$Student_ID) &
+  !is.na(student_data$Marks) &
+  !is.na(student_data$Attendance),
+]
+
+student_data$Gender <- trimws(student_data$Gender)
+student_data$Result <- trimws(student_data$Result)
+
+student_data
+```
+
+**Explanation:** Records missing key analytical fields are removed. `trimws()` removes accidental leading/trailing spaces. The supplied dataset contains no missing values, so this cleaning step does not remove any observations.
+
+# 5. Exploratory Data Analysis
+
+## 5.1 Basic summary
+
+```{r summary}
+summary(student_data)
+```
+
+**Explanation:** `summary()` provides minimum, quartiles, median, mean and maximum for numerical variables and basic information for character variables.
+
+## 5.2 Marks statistics
+
+```{r marks-statistics}
+mean(student_data$Marks)
+median(student_data$Marks)
+var(student_data$Marks)
+sd(student_data$Marks)
+min(student_data$Marks)
+max(student_data$Marks)
+```
+
+**Explanation:** Mean and median describe the centre of the marks distribution. Variance and standard deviation measure spread. Minimum and maximum show the observed range.
+
+## 5.3 Attendance statistics
+
+```{r attendance-statistics}
+mean(student_data$Attendance)
+median(student_data$Attendance)
+sd(student_data$Attendance)
+```
+
+**Explanation:** These statistics summarise the typical attendance level and its variation.
+
+# 6. Categorical Analysis
+
+## 6.1 Gender distribution
+
+```{r gender-count}
+gender_count <- table(student_data$Gender)
+gender_count
+```
+
+```{r gender-plot}
+pie(
+  gender_count,
+  main = "Gender Distribution",
+  labels = paste(names(gender_count), gender_count)
+)
+```
+
+**Interpretation:** The dataset contains an equal number of male and female students, so neither gender dominates the sample.
+
+## 6.2 Result distribution
+
+```{r result-count}
+result_count <- table(student_data$Result)
+result_count
+```
+
+```{r result-plot}
+pie(
+  result_count,
+  main = "Student Result Distribution",
+  labels = paste(names(result_count), result_count)
+)
+```
+
+**Interpretation:** Most students are recorded as Pass, while only two students are recorded as Fail.
+
+# 7. Marks and Attendance Visualisation
+
+## 7.1 Student marks
+
+```{r marks-plot}
+barplot(
+  student_data$Marks,
+  names.arg = student_data$Name,
+  main = "Student Marks",
+  xlab = "Students",
+  ylab = "Marks",
+  las = 2
+)
+```
+
+**Interpretation:** Marks vary substantially between students. The highest observed mark is 95 and the lowest is 38.
+
+## 7.2 Student attendance
+
+```{r attendance-plot}
+barplot(
+  student_data$Attendance,
+  names.arg = student_data$Name,
+  main = "Student Attendance",
+  xlab = "Students",
+  ylab = "Attendance (%)",
+  las = 2
+)
+```
+
+**Interpretation:** Attendance ranges from 60% to 96%. The two students with the lowest marks also have relatively low attendance.
+
+# 8. Statistical Relationship
+
+## 8.1 Correlation between attendance and marks
+
+```{r correlation}
+cor(
+  student_data$Attendance,
+  student_data$Marks
+)
+```
+
+**Interpretation:** The correlation is approximately **0.993**, indicating a very strong positive linear relationship in this small sample: students with higher attendance tend to have higher marks.
+
+Correlation does **not** prove that attendance causes higher marks. The dataset is small and observational, so the result should be treated as an association rather than a causal conclusion.
+
+## 8.2 Scatter plot
+
+```{r scatter}
+plot(
+  student_data$Attendance,
+  student_data$Marks,
+  main = "Attendance vs Marks",
+  xlab = "Attendance (%)",
+  ylab = "Marks",
+  pch = 19
+)
+abline(lm(Marks ~ Attendance, data = student_data))
+```
+
+**Interpretation:** The plotted points follow an upward pattern, supporting the numerical correlation result.
+
+# 9. Key Findings
+
+- The dataset contains **12 students** and **7 variables**.
+- No missing values are present in the supplied data.
+- No duplicate records are expected after checking with `duplicated()`.
+- Mean marks are **69.50**, with a median of **70**.
+- Marks have a standard deviation of about **18.15**, showing noticeable variation.
+- Mean attendance is approximately **79.92%**.
+- There are **6 male and 6 female students**.
+- **10 students passed and 2 students failed**, giving a sample pass rate of about **83.3%**.
+- Attendance and marks have a correlation of approximately **0.993**, which is a very strong positive association in this sample.
+
+# 10. Conclusion
+
+This project demonstrates a complete beginner-level data-analysis workflow in R Markdown. The student dataset was imported from CSV, inspected, checked for missing and duplicate values, validated, and analysed using descriptive statistics and visualisations.
+
+The main analytical result is the very strong positive association between attendance and marks. In this dataset, students with higher attendance generally have higher marks. However, the sample contains only 12 observations, so the result should not be generalised to all students or interpreted as proof that attendance alone determines academic performance.
+
+# 11. Limitations and Possible Improvements
+
+The dataset is small and contains only a few variables. A larger real-world project could include study hours, assignment scores, previous semester marks, subject-wise performance and socioeconomic factors. Statistical tests or regression models could then be used to investigate the relationship more rigorously.
+
+# 12. Reproducibility
+
+Place these files in the same folder:
+
+- `student_performance_analysis.Rmd`
+- `student_data.csv`
+
+Open the R Markdown file in RStudio and click **Knit**. The analysis will run from the CSV file and generate the HTML report.
+
+Required R packages:
+
+```r
+install.packages(c("rmarkdown", "knitr"))
+```
+
+The analysis itself uses base R functions, so no additional analysis package is required.
